@@ -256,6 +256,7 @@ class NotificationSlack:
 class TelegramBot:
     bot_token: str
     chat_id: str
+    thread_id: int | None = None
 
 
 @frozen
