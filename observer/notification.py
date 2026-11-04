@@ -167,11 +167,17 @@ def notify_slack_embed(config: NotificationSlack, message: Message) -> None:
 
 def notify_telegram(config: NotificationTelegram, message: Message) -> None:
     for t in config.bot:
+        payload: dict[str, Any] = {
+            "chat_id": t.chat_id,
+            "text": message.build_str(with_log=True),
+        }
+        if t.thread_id is not None:
+            payload["message_thread_id"] = t.thread_id
         notify(
             f"https://api.telegram.org/bot{t.bot_token}/sendMessage",
             "POST",
             headers={"Content-Type": "application/json"},
-            json={"chat_id": t.chat_id, "text": message.build_str(with_log=True)},
+            json=payload,
         )
 
 

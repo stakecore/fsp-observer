@@ -61,6 +61,7 @@ RPC_BASE_URL="https://flare-api.flare.network" \
 | `NOTIFICATION_SLACK_EMBED_WEBHOOK` | no | - | Slack embed webhook URL |
 | `NOTIFICATION_TELEGRAM_BOT_TOKEN` | no | - | Telegram bot token (comma-separated for multiple) |
 | `NOTIFICATION_TELEGRAM_CHAT_ID` | no | - | Telegram chat ID (comma-separated, paired with bot tokens) |
+| `NOTIFICATION_TELEGRAM_THREAD_ID` | no | - | Topic (`message_thread_id`) to post to in a group with topics, e.g. `2` from `t.me/c/<chat>/2/...` (comma-separated, paired with chat IDs; empty or unset = General) |
 | `NOTIFICATION_GENERIC_WEBHOOK` | no | - | Generic HTTP POST webhook URL |
 | `METRICS_ENABLED` | no | `false` | Enable Prometheus metrics endpoint |
 | `METRICS_PORT` | no | `8000` | Prometheus metrics server port |
