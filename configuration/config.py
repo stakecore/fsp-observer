@@ -118,12 +118,20 @@ def get_notification_config() -> Notification:
 
     telegram_bot_token = os.environ.get("NOTIFICATION_TELEGRAM_BOT_TOKEN")
     telegram_chat_id = os.environ.get("NOTIFICATION_TELEGRAM_CHAT_ID")
+    telegram_thread_id = os.environ.get("NOTIFICATION_TELEGRAM_THREAD_ID", "")
     telegram = []
     if telegram_bot_token is not None and telegram_chat_id is not None:
         bot_tokens = telegram_bot_token.split(",")
         chat_ids = telegram_chat_id.split(",")
+        # optional and paired by position; an empty entry posts to the chat itself
+        # (a group's General topic), so a short list never drops a bot
+        thread_ids = [
+            int(x) if x.strip() else None for x in telegram_thread_id.split(",")
+        ]
+        thread_ids += [None] * (len(chat_ids) - len(thread_ids))
         telegram = [
-            TelegramBot(t, c) for t, c in zip(bot_tokens, chat_ids, strict=False)
+            TelegramBot(t, c, th)
+            for t, c, th in zip(bot_tokens, chat_ids, thread_ids, strict=False)
         ]
 
     generic_webhook = os.environ.get("NOTIFICATION_GENERIC_WEBHOOK")
