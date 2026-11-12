@@ -188,8 +188,8 @@ class FtsoVotingRoundProtocol(
 
             votes_to_consider.append((entity, submit_1, submit_2))
 
-        # no valid commit+reveal pair from anyone (e.g. slow blocks pushed every
-        # reveal past the deadline): no consensus medians this round
+        # nothing matched commit to reveal this round (e.g. a chain halt), so there is
+        # no median and no way to tell how many feeds the round had
         if not number_of_feeds:
             return
 
